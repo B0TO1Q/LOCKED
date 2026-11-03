@@ -55,7 +55,8 @@ def footer(c, code):
         c.line(bx + i * inch / 4, by, bx + i * inch / 4, by + h)
     c.setFont("Helvetica", 6.5)
     c.drawString(bx + inch + 6, by, "= 1 inch. Print at 100% / Actual Size (no 'Fit to page'), then check this bar with a ruler.")
-    c.drawRightString(8.0 * inch, by, code + "  |  LOCKED")
+    ref = ("  |  Drills p. " + str(DRILL_PAGE[code])) if code in DRILL_PAGE else ""
+    c.drawRightString(8.0 * inch, by, code + ref + "  |  LOCKED")
 
 
 def rings(c, x, y, diams, black_from=None, nums=None, fill=black, lw=0.7):
@@ -1003,8 +1004,64 @@ def t37(c):
     scale_note(c, "Scale 25% (1:4). At 7 yd it appears like a full-size target at 28 yd.")
 
 
+# ---------------- drill book ----------------
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from drills import DRILLS
+from reportlab.lib.utils import simpleSplit
+
+DRILL_PAGE = {}
+_titles = {code: title for code, title, _, _ in PAGES}
+_drill_codes = [c for c, *_ in PAGES if c in DRILLS]
+_PER = 5
+_chunks = []
+_groups = {"t": [], "f": [], "a": []}
+for _c in _drill_codes:
+    _n = int(_c[2:])
+    _groups["t" if _n <= 16 else ("f" if _n <= 29 else "a")].append(_c)
+for _g in _groups.values():
+    _k = -(-len(_g) // _PER)
+    _size = -(-len(_g) // _k) if _k else 0
+    _chunks += [_g[i:i + _size] for i in range(0, len(_g), _size)]
+_page_of = {code: i + 2 for i, (code, *_ ) in enumerate(PAGES)}
+
+
+def _make_drill_page(codes):
+    def fn(c):
+        y = 9.95 * inch
+        for code in codes:
+            c.setFillColor(DK); c.rect(0.75 * inch, y - 5, 7 * inch, 0.27 * inch, stroke=0, fill=1)
+            label(c, 0.75 * inch + 8, y + 2, code, 9, True, col=OR, center=False)
+            label(c, 0.75 * inch + 0.65 * inch, y + 2, _titles[code].upper(), 10, True, col=white, center=False)
+            c.setFillColor(HexColor("#BBBBBB")); c.setFont("Helvetica", 7.5)
+            c.drawRightString(7.75 * inch - 8, y + 2, f"TARGET ON PAGE {_page_of[code]}")
+            y -= 0.3 * inch
+            for name, setup, how in DRILLS[code]:
+                c.setStrokeColor(DK); c.setLineWidth(0.7); c.rect(0.85 * inch, y - 1, 8, 8, stroke=1, fill=0)
+                label(c, 0.85 * inch + 14, y, name, 9, True, center=False)
+                nw = c.stringWidth(name, "Helvetica-Bold", 9)
+                label(c, 0.85 * inch + 22 + nw, y, setup, 8, col=OR, center=False)
+                lines = simpleSplit(how, "Helvetica", 8.5, 6.6 * inch)
+                for ln in lines:
+                    y -= 0.155 * inch
+                    label(c, 0.85 * inch + 14, y, ln, 8.5, center=False)
+                y -= 0.215 * inch
+            y -= 0.1 * inch
+    return fn
+
+
+for _n, _codes in enumerate(_chunks):
+    _code = f"D-{_n + 1:02d}"
+    _sub = f"Three drills each for {_codes[0]} to {_codes[-1]}. Tick the box once you run a drill clean."
+    target(_code, f"Drill Book {_n + 1}", _sub)(_make_drill_page(_codes))
+
+for _n, _codes in enumerate(_chunks):
+    for _c in _codes:
+        DRILL_PAGE[_c] = 2 + len(PAGES) - len(_chunks) + _n
+
+
 # ---------------- build ----------------
-SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 29), ("AGENCY & MILITARY", 29, 99)]
+SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 29), ("AGENCY & MILITARY", 29, 37), ("DRILL BOOK", 37, 99)]
 
 
 def cover(c):
@@ -1015,9 +1072,9 @@ def cover(c):
     c.setFillColor(white); c.setFont("Helvetica-Bold", 56)
     c.drawString(0.7 * inch, 9.5 * inch, "LOCKED")
     c.setFont("Helvetica", 11)
-    c.drawString(0.75 * inch, 9.12 * inch, f"Targets, data, field tools and agency drills  |  {len(PAGES)} pages  |  US Letter, true scale")
+    c.drawString(0.75 * inch, 9.12 * inch, f"{len(PAGES)} sheets  |  US Letter  |  true scale")
     colx = [0.75 * inch, 4.4 * inch]
-    layout = [(0, SECTIONS[0]), (1, SECTIONS[1]), (1, SECTIONS[2]), (1, SECTIONS[3])]
+    layout = [(0, SECTIONS[0]), (0, SECTIONS[4]), (1, SECTIONS[1]), (1, SECTIONS[2]), (1, SECTIONS[3])]
     ys = [8.3 * inch, 8.3 * inch]
     rh = 0.29 * inch
     for col, (name, a0, a1) in layout:
@@ -1056,7 +1113,7 @@ import json
 meta = []
 for i, (code, title, sub, _) in enumerate(PAGES):
     sec = next(n for n, a0, a1 in SECTIONS if a0 <= i < a1)
-    meta.append({"code": code, "title": title, "desc": sub, "section": sec.title().replace("&", "&"), "page": i + 2})
+    meta.append({"code": code, "title": title, "desc": sub, "section": sec.title(), "page": i + 2, "drills": [list(d) for d in DRILLS.get(code, [])], "drillPage": DRILL_PAGE.get(code)})
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "pages.json"), "w") as f:
     json.dump(meta, f, indent=1)
 print(len(PAGES))

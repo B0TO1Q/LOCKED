@@ -60,7 +60,7 @@ section.group { margin: 30px 0 10px; }
 section.group h2 { font: 800 30px/1 var(--display); letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 4px; display: flex; gap: 12px; align-items: baseline; }
 section.group h2 small { font: 500 12px var(--mono); color: var(--muted); letter-spacing: 0.05em; }
 section.group > p { margin: 0 0 14px; color: var(--muted); max-width: 70ch; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; align-items: start; }
 
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
@@ -70,6 +70,12 @@ section.group > p { margin: 0 0 14px; color: var(--muted); max-width: 70ch; }
 .code { font: 700 11px var(--mono); color: var(--accent); letter-spacing: 0.05em; }
 .title { font: 600 16px/1.2 var(--body); margin: 0; text-wrap: balance; }
 .desc { font-size: 13px; color: var(--muted); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.drills { font-size: 13px; border-top: 1px solid var(--line); padding-top: 6px; margin-top: 4px; }
+.drills summary { cursor: pointer; font: 700 12px var(--mono); color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; }
+.drills ol { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 8px; }
+.drills li b { display: block; font-weight: 600; }
+.drills .setup { display: block; font: 500 11px var(--mono); color: var(--muted); margin: 1px 0 2px; }
+.drills .dref { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
 .actions { display: flex; gap: 8px; align-items: center; margin-top: auto; padding-top: 8px; }
 .actions .btn { padding: 6px 11px; font-size: 13px; }
 .pick { margin-left: auto; display: inline-flex; gap: 6px; align-items: center; font-size: 13px; cursor: pointer; user-select: none; }
@@ -125,7 +131,7 @@ footer .wrap { display: grid; gap: 8px; }
 <div class="bar">
   <div class="wrap">
     <div class="chips" id="chips" role="group" aria-label="Filter by section"></div>
-    <input class="search" id="q" type="search" placeholder="Search targets" aria-label="Search targets">
+    <input class="search" id="q" type="search" placeholder="Search targets or drills" aria-label="Search targets">
     <a class="btn" href="LOCKED.pdf">Full PDF</a>
     <button class="btn primary" id="print-all" type="button">Print all</button>
   </div>
@@ -167,7 +173,8 @@ const SECTIONS = {
   "Targets": "Sight-in, precision, pistol drills and games.",
   "Shooter Tools": "DOPE cards, angular reference, wind, round count and checklist.",
   "Field Kit": "Data book, range card, range estimation and fundamentals for rifle work.",
-  "Agency & Military": "Q-style, police silhouette, E- and F-type, scaled-distance and practical competition replicas, plus the FBI pistol qualification card."
+  "Agency & Military": "Q-style, police silhouette, E- and F-type, scaled-distance and practical competition replicas, plus the FBI pistol qualification card.",
+  "Drill Book": "Three drills for every target, with distance, round count and par time. Print these and tick off each drill as you run it clean."
 };
 const order = Object.keys(SECTIONS);
 const selected = new Set();
@@ -197,6 +204,7 @@ function card(p) {
       <span class="code">${p.code} · PAGE ${p.page}</span>
       <h3 class="title">${p.title}</h3>
       <p class="desc">${p.desc}</p>
+      ${p.drills && p.drills.length ? `<details class="drills"><summary>${p.drills.length} drills</summary><ol>${p.drills.map(d => `<li><b>${d[0]}</b><span class="setup">${d[1]}</span>${d[2]}</li>`).join("")}</ol><p class="dref">Printable on Drill Book page ${p.drillPage}</p></details>` : ""}
       <div class="actions">
         <button class="btn primary" type="button" data-print>Print</button>
         <label class="pick"><input type="checkbox" id="pick-${p.code}" ${selected.has(p.code) ? "checked" : ""}><span>Batch</span></label>
@@ -216,7 +224,7 @@ function render() {
   let shown = 0;
   order.forEach(sec => {
     if (filter !== "All" && filter !== sec) return;
-    const items = PAGES.filter(p => p.section === sec && (!query || (p.title + " " + p.desc + " " + p.code).toLowerCase().includes(query)));
+    const items = PAGES.filter(p => p.section === sec && (!query || (p.title + " " + p.desc + " " + p.code + " " + (p.drills || []).map(d => d.join(" ")).join(" ")).toLowerCase().includes(query)));
     if (!items.length) return;
     shown += items.length;
     const s = document.createElement("section"); s.className = "group";
