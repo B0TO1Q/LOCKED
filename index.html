@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LOCKED</title>
+<meta name="description" content="Printable shooting targets, DOPE cards, data book pages and agency-style qualification targets. US Letter, true scale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: range-bag catalog. Sticky command bar, filter rail, card grid of true-scale sheets. */
+:root {
+  --bg: #F1F0EC; --panel: #FFFFFF; --ink: #1D1F1C; --muted: #6B6E66; --line: #D8D7D0;
+  --accent: #E8541A; --accent-ink: #FFFFFF; --olive: #5B6142; --chip: #E6E4DD;
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161815; --panel: #20231F; --ink: #ECEBE6; --muted: #9DA096; --line: #343831; --chip: #2B2F29; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+a { color: inherit; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.hero { background: #1D1F1C; color: #ECEBE6; }
+header.hero .wrap { padding-block: 40px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+.wordmark { font: 800 clamp(56px, 11vw, 120px)/0.85 var(--display); letter-spacing: 0.02em; margin: 0; display: flex; align-items: center; gap: 0.12em; }
+.wordmark .o { width: 0.72em; height: 0.72em; border-radius: 50%; border: 0.11em solid var(--accent); position: relative; display: inline-block; }
+.wordmark .o::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; background: var(--accent); }
+.tag { margin: 14px 0 0; color: #B9BBB2; max-width: 60ch; }
+.stats { display: flex; gap: 22px; font: 500 12px/1.2 var(--mono); color: #9DA096; text-transform: uppercase; letter-spacing: 0.06em; }
+.stats b { display: block; color: #ECEBE6; font: 800 30px/1 var(--display); }
+
+.bar { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-block: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto; min-width: 0; }
+.chip { border: 0; background: var(--chip); color: var(--ink); font: 600 13px var(--body); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.search { flex: 0 1 220px; min-width: 140px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 14px var(--body); padding: 7px 11px; border-radius: 8px; }
+.btn { border: 0; cursor: pointer; font: 600 14px var(--body); padding: 9px 14px; border-radius: 8px; background: var(--chip); color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn:focus-visible, .chip:focus-visible, .search:focus-visible, .card input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.tips { margin: 20px 0 6px; padding: 12px 16px; border-left: 4px solid var(--accent); background: var(--panel); font-size: 14px; }
+.tips strong { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; }
+
+section.group { margin: 30px 0 10px; }
+section.group h2 { font: 800 30px/1 var(--display); letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 4px; display: flex; gap: 12px; align-items: baseline; }
+section.group h2 small { font: 500 12px var(--mono); color: var(--muted); letter-spacing: 0.05em; }
+section.group > p { margin: 0 0 14px; color: var(--muted); max-width: 70ch; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.thumb { aspect-ratio: 8.5 / 11; max-width: 100%; background: #fff; border-bottom: 1px solid var(--line); display: block; cursor: zoom-in; padding: 0; border-top: 0; border-left: 0; border-right: 0; width: 100%; }
+.thumb img { width: 100%; height: 100%; display: block; }
+.meta { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.code { font: 700 11px var(--mono); color: var(--accent); letter-spacing: 0.05em; }
+.title { font: 600 16px/1.2 var(--body); margin: 0; text-wrap: balance; }
+.desc { font-size: 13px; color: var(--muted); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.actions { display: flex; gap: 8px; align-items: center; margin-top: auto; padding-top: 8px; }
+.actions .btn { padding: 6px 11px; font-size: 13px; }
+.pick { margin-left: auto; display: inline-flex; gap: 6px; align-items: center; font-size: 13px; cursor: pointer; user-select: none; }
+.pick input { width: 17px; height: 17px; accent-color: var(--accent); }
+.empty { color: var(--muted); padding: 30px 0; }
+
+.tray { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 9; background: #1D1F1C; color: #ECEBE6; border-radius: 12px; padding: 10px 10px 10px 16px; display: flex; gap: 10px; align-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.3); max-width: calc(100% - 32px); }
+.tray[hidden] { display: none; }
+.tray .n { font: 700 13px var(--mono); }
+.tray .btn { background: #343831; color: #ECEBE6; }
+.tray .btn.primary { background: var(--accent); }
+
+dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh; }
+dialog::backdrop { background: rgba(10,10,10,.8); }
+dialog .viewer { background: #fff; width: min(92vw, 70vh); aspect-ratio: 8.5/11; }
+dialog img { width: 100%; height: 100%; display: block; }
+dialog .vbar { display: flex; gap: 8px; justify-content: flex-end; padding-top: 8px; }
+
+footer { color: var(--muted); font-size: 13px; padding-block: 40px 90px; border-top: 1px solid var(--line); margin-top: 40px; }
+footer .wrap { display: grid; gap: 8px; }
+
+#print-root { display: none; }
+@page { size: letter; margin: 0; }
+@media print {
+  body { background: #fff; }
+  .app, dialog { display: none !important; }
+  #print-root { display: block; }
+  #print-root img { display: block; width: 8.5in; height: 11in; page-break-after: always; break-after: page; }
+  #print-root img:last-child { page-break-after: auto; break-after: auto; }
+}
+@media (max-width: 640px) {
+  .bar { position: static; }
+  header.hero .wrap { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .desc { display: none; }
+  .actions { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: no-preference) { .card { transition: border-color .15s, box-shadow .15s; } }
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1 class="wordmark">L<span class="o" aria-hidden="true"></span>CKED</h1>
+      <p class="tag">Printable targets, DOPE cards, data book pages and agency-style qualification targets. Every sheet is US Letter and prints at true scale.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="chips" id="chips" role="group" aria-label="Filter by section"></div>
+    <input class="search" id="q" type="search" placeholder="Search targets" aria-label="Search targets">
+    <a class="btn" href="LOCKED.pdf">Full PDF</a>
+    <button class="btn primary" id="print-all" type="button">Print all</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="tips"><strong>PRINT AT 100%.</strong> In the print dialog set Scale to 100% or Actual Size and Margins to None, then measure the 1-inch bar at the bottom of the first sheet. Tick several cards to print them as one batch.</div>
+  <div id="groups"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Agency and military pages are training replicas with approximate proportions. For an official qualification, shoot the target your agency or unit issues.</div>
+    <div>Ballistic tables, zero distances and range estimates are starting points. Confirm everything on paper with your own rifle and ammo.</div>
+  </div>
+</footer>
+
+<div class="tray" id="tray" hidden>
+  <span class="n" id="tray-n">0 selected</span>
+  <button class="btn" id="clear" type="button">Clear</button>
+  <button class="btn primary" id="print-sel" type="button">Print selected</button>
+</div>
+
+<dialog id="viewer">
+  <div class="viewer"><img id="viewer-img" alt=""></div>
+  <div class="vbar">
+    <button class="btn primary" id="viewer-print" type="button">Print this</button>
+    <a class="btn" id="viewer-open" href="#" target="_blank" rel="noopener">Open full size</a>
+    <button class="btn" id="viewer-close" type="button">Close</button>
+  </div>
+</dialog>
+</div>
+
+<div id="print-root" aria-hidden="true"></div>
+
+<script>
+const PAGES = [{"code": "T-01", "title": "Five-Bull Sight-In", "desc": "General sight-in. Five 2.5 in. bulls on a 1 in. grid. Pistol 7-15 yd, rifle 25-50 yd.", "section": "Targets", "page": 2}, {"code": "T-02", "title": "100-Yard Zero Grid", "desc": "1 in. squares. At 100 yd each square is about 1 MOA (1.047 in.). Center diamond for zero, corners for confirmation.", "section": "Targets", "page": 3}, {"code": "T-03", "title": "25 m Metric Zero", "desc": "1 cm squares. At 25 m each square = 0.4 mil (about 1.4 MOA). Move impacts to the center circle.", "section": "Targets", "page": 4}, {"code": "T-04", "title": "MOA Dot Ladder", "desc": "Dot sizes in true MOA at 100 yd. Rows: 2, 1.5, 1 and 0.5 MOA. Shoot each row smaller as you tighten up.", "section": "Targets", "page": 5}, {"code": "T-05", "title": "Precision Bullseye", "desc": "Slow-fire scoring target. Rings 10 to 5 plus X ring. Score each shot by the highest ring it touches.", "section": "Targets", "page": 6}, {"code": "T-06", "title": "Rimfire 12-Bull", "desc": "Ten 1.5 in. record bulls plus two sighters. Built for 50 ft / 25 yd rimfire and air rifle practice.", "section": "Targets", "page": 7}, {"code": "T-07", "title": "Ten-Dot Drill", "desc": "2 in. and 1 in. dots. Run each numbered string in order. Any miss on a string means you rerun it.", "section": "Targets", "page": 8}, {"code": "T-08", "title": "Reduced Silhouette", "desc": "Generic torso and head with scoring zones. Reduced size: shooting it at 10 yd looks like a full-size target at about 30 yd.", "section": "Targets", "page": 9}, {"code": "T-09", "title": "Shapes & Numbers", "desc": "Call-out drill. A partner calls a shape, a color, or a number and you engage only that target. Builds target ID under time.", "section": "Targets", "page": 10}, {"code": "T-10", "title": "Tic-Tac-Toe", "desc": "Two shooters, one target. Hit a square to claim it with your color of marker. First to three in a row wins.", "section": "Targets", "page": 11}, {"code": "T-11", "title": "Plate Rack", "desc": "Two racks of six 1 in. plates plus a stop plate. At 10 yd each plate matches a 4 in. steel plate at 40 yd.", "section": "Targets", "page": 12}, {"code": "T-12", "title": "Error Diagnosis", "desc": "For a right-handed handgun shooter (mirror it if left-handed). Fire 10 slow shots at the center, then read where they cluster.", "section": "Targets", "page": 13}, {"code": "T-13", "title": "Load Development", "desc": "Ten 1 in. diamonds for a ladder or OCW test. Write the charge and seating depth under each.", "section": "Targets", "page": 14}, {"code": "T-14", "title": "Transitions", "desc": "Three head boxes spread wide. Draw, one shot each left to right, then right to left. Push speed, keep hits in the box.", "section": "Targets", "page": 15}, {"code": "T-15", "title": "Half-Inch Grid", "desc": "Blank 1/2 in. grid with a center cross. Use it for anything: group measuring, custom drills, or a backer.", "section": "Targets", "page": 16}, {"code": "T-16", "title": "Range Log", "desc": "Record each group. Measure center-to-center (largest spread minus one bullet diameter).", "section": "Targets", "page": 17}, {"code": "T-17", "title": "Pocket DOPE Cards", "desc": "Four 3.5 x 4.25 in. cards. Cut on the dashed lines, fill in your come-ups, and tape one to the stock or keep it in a sleeve.", "section": "Shooter Tools", "page": 18}, {"code": "T-18", "title": "Full DOPE Sheet", "desc": "One rifle, 50 yd steps out to 1000. Record conditions at the top so you know what the data was shot in.", "section": "Shooter Tools", "page": 19}, {"code": "T-19", "title": "Angular Reference", "desc": "How big a MOA, a mil and one click are at each distance, plus range-estimation and conversion formulas.", "section": "Shooter Tools", "page": 20}, {"code": "T-20", "title": "Wind Card", "desc": "Wind value by clock direction, field cues for estimating speed, and a blank hold table for your load.", "section": "Shooter Tools", "page": 21}, {"code": "T-21", "title": "Round Count Log", "desc": "Track rounds, cleaning, parts and malfunctions for one firearm. Helps you replace springs and barrels on schedule.", "section": "Shooter Tools", "page": 22}, {"code": "T-22", "title": "Range Day Checklist", "desc": "Run through this before you leave the house. Laminate it and check boxes with a dry-erase marker.", "section": "Shooter Tools", "page": 23}, {"code": "T-23", "title": "36-Yard Zero", "desc": "Grid squares are 1 MOA at 36 yd (0.377 in.). A common carbine zero distance. Confirm at your far distance afterward.", "section": "Field Kit", "page": 24}, {"code": "T-24", "title": "Data Book Page", "desc": "One page per string. Plot where you called each shot and where it hit. The gap between the two shows what to fix.", "section": "Field Kit", "page": 25}, {"code": "T-25", "title": "Metric DOPE Cards", "desc": "Four cut-out cards ranged in meters (100-1000 m) for mil-based optics. Same layout as the yard cards.", "section": "Field Kit", "page": 26}, {"code": "T-26", "title": "Range Card", "desc": "Sketch your sector from your position: left and right limits, reference points and their ranges. Fill in the table to match.", "section": "Field Kit", "page": 27}, {"code": "T-27", "title": "Range Estimation", "desc": "Mil-relation table in meters. Measure the target in mils through your reticle, find its row, and read the range.", "section": "Field Kit", "page": 28}, {"code": "T-28", "title": "Fundamentals Card", "desc": "Safety rules, the marksmanship fundamentals, position checkpoints and immediate action for a stoppage. Laminate for the range bag.", "section": "Field Kit", "page": 29}, {"code": "T-29", "title": "Dry-Fire Log", "desc": "Daily dry practice tracker. Unload, move all ammo out of the room, verify empty, and pick a safe backstop before every session.", "section": "Field Kit", "page": 30}, {"code": "T-30", "title": "FBI Q-Style", "desc": "Bottle-shaped 'Q' target used in law enforcement qualification. Any hit inside the bottle counts.", "section": "Agency & Military", "page": 31}, {"code": "T-31", "title": "FBI QIT-Style", "desc": "Q bottle with the lower part cut off by a dashed line. Only hits inside the bottle and above the line count.", "section": "Agency & Military", "page": 32}, {"code": "T-32", "title": "FBI Pistol Qual Card", "desc": "The publicly reported FBI pistol qualification: 60 rounds on a QIT-style target, 48 hits to pass. Score each stage below.", "section": "Agency & Military", "page": 33}, {"code": "T-33", "title": "Police Silhouette", "desc": "B-27-style law enforcement silhouette with scoring rings 7 to 10 around center mass. Training replica.", "section": "Agency & Military", "page": 34}, {"code": "T-34", "title": "Military E-Type", "desc": "Standard military head-and-torso silhouette (about 19.5 x 40 in. full size). Any hit on the silhouette counts.", "section": "Agency & Military", "page": 35}, {"code": "T-35", "title": "Military F-Type", "desc": "Head-and-shoulders silhouette (about 19.5 x 23 in. full size), representing a target behind cover.", "section": "Agency & Military", "page": 36}, {"code": "T-36", "title": "Scaled Distance Silhouettes", "desc": "E- and F-type silhouettes shrunk to simulate 100-300 m when shot from 10 m. Build distance skills on a short range.", "section": "Agency & Military", "page": 37}, {"code": "T-37", "title": "Practical Competition", "desc": "USPSA/IPSC-style action shooting target with A, C and D zones and head box. Training replica.", "section": "Agency & Military", "page": 38}];
+const SECTIONS = {
+  "Targets": "Sight-in, precision, pistol drills and games.",
+  "Shooter Tools": "DOPE cards, angular reference, wind, round count and checklist.",
+  "Field Kit": "Data book, range card, range estimation and fundamentals for rifle work.",
+  "Agency & Military": "Q-style, police silhouette, E- and F-type, scaled-distance and practical competition replicas, plus the FBI pistol qualification card."
+};
+const order = Object.keys(SECTIONS);
+const selected = new Set();
+let filter = "All", query = "";
+
+const $ = s => document.querySelector(s);
+const svgOf = p => "svg/" + p.code + ".svg";
+
+$("#stats").innerHTML = `<div><b>${PAGES.length}</b>sheets</div><div><b>${order.length}</b>sections</div><div><b>1:1</b>scale</div>`;
+
+const chips = $("#chips");
+["All", ...order].forEach(name => {
+  const b = document.createElement("button");
+  b.className = "chip"; b.type = "button"; b.textContent = name;
+  b.setAttribute("aria-pressed", name === filter);
+  b.addEventListener("click", () => { filter = name; chips.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.textContent === name)); render(); });
+  chips.appendChild(b);
+});
+$("#q").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); render(); });
+
+function card(p) {
+  const el = document.createElement("article");
+  el.className = "card" + (selected.has(p.code) ? " sel" : "");
+  el.innerHTML = `
+    <button class="thumb" type="button" aria-label="Preview ${p.title}"><img loading="lazy" src="${svgOf(p)}" alt="${p.title} preview"></button>
+    <div class="meta">
+      <span class="code">${p.code} · PAGE ${p.page}</span>
+      <h3 class="title">${p.title}</h3>
+      <p class="desc">${p.desc}</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-print>Print</button>
+        <label class="pick"><input type="checkbox" id="pick-${p.code}" ${selected.has(p.code) ? "checked" : ""}><span>Batch</span></label>
+      </div>
+    </div>`;
+  el.querySelector(".thumb").addEventListener("click", () => openViewer(p));
+  el.querySelector("[data-print]").addEventListener("click", () => printSheets([p]));
+  el.querySelector("input").addEventListener("change", e => {
+    e.target.checked ? selected.add(p.code) : selected.delete(p.code);
+    el.classList.toggle("sel", e.target.checked); updateTray();
+  });
+  return el;
+}
+
+function render() {
+  const root = $("#groups"); root.innerHTML = "";
+  let shown = 0;
+  order.forEach(sec => {
+    if (filter !== "All" && filter !== sec) return;
+    const items = PAGES.filter(p => p.section === sec && (!query || (p.title + " " + p.desc + " " + p.code).toLowerCase().includes(query)));
+    if (!items.length) return;
+    shown += items.length;
+    const s = document.createElement("section"); s.className = "group";
+    s.innerHTML = `<h2>${sec} <small>${items.length} SHEETS</small></h2><p>${SECTIONS[sec]}</p>`;
+    const g = document.createElement("div"); g.className = "grid";
+    items.forEach(p => g.appendChild(card(p)));
+    s.appendChild(g); root.appendChild(s);
+  });
+  if (!shown) root.innerHTML = `<p class="empty">Nothing matches "${query}". Try a code like T-17 or a word like zero.</p>`;
+}
+
+function updateTray() {
+  $("#tray").hidden = selected.size === 0;
+  $("#tray-n").textContent = selected.size + " selected";
+}
+$("#clear").addEventListener("click", () => { selected.clear(); render(); updateTray(); });
+$("#print-sel").addEventListener("click", () => printSheets(PAGES.filter(p => selected.has(p.code))));
+$("#print-all").addEventListener("click", () => printSheets(PAGES));
+
+async function printSheets(list) {
+  const root = $("#print-root"); root.innerHTML = "";
+  const imgs = list.map(p => { const i = new Image(); i.src = svgOf(p); i.alt = p.title; root.appendChild(i); return i; });
+  await Promise.all(imgs.map(i => i.decode ? i.decode().catch(() => {}) : Promise.resolve()));
+  window.print();
+}
+window.addEventListener("afterprint", () => { $("#print-root").innerHTML = ""; });
+
+const dlg = $("#viewer"); let current = null;
+function openViewer(p) {
+  current = p;
+  $("#viewer-img").src = svgOf(p); $("#viewer-img").alt = p.title;
+  $("#viewer-open").href = svgOf(p);
+  dlg.showModal();
+}
+$("#viewer-close").addEventListener("click", () => dlg.close());
+$("#viewer-print").addEventListener("click", () => { dlg.close(); printSheets([current]); });
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+[
+ {
+  "code": "T-01",
+  "title": "Five-Bull Sight-In",
+  "desc": "General sight-in. Five 2.5 in. bulls on a 1 in. grid. Pistol 7-15 yd, rifle 25-50 yd.",
+  "section": "Targets",
+  "page": 2
+ },
+ {
+  "code": "T-02",
+  "title": "100-Yard Zero Grid",
+  "desc": "1 in. squares. At 100 yd each square is about 1 MOA (1.047 in.). Center diamond for zero, corners for confirmation.",
+  "section": "Targets",
+  "page": 3
+ },
+ {
+  "code": "T-03",
+  "title": "25 m Metric Zero",
+  "desc": "1 cm squares. At 25 m each square = 0.4 mil (about 1.4 MOA). Move impacts to the center circle.",
+  "section": "Targets",
+  "page": 4
+ },
+ {
+  "code": "T-04",
+  "title": "MOA Dot Ladder",
+  "desc": "Dot sizes in true MOA at 100 yd. Rows: 2, 1.5, 1 and 0.5 MOA. Shoot each row smaller as you tighten up.",
+  "section": "Targets",
+  "page": 5
+ },
+ {
+  "code": "T-05",
+  "title": "Precision Bullseye",
+  "desc": "Slow-fire scoring target. Rings 10 to 5 plus X ring. Score each shot by the highest ring it touches.",
+  "section": "Targets",
+  "page": 6
+ },
+ {
+  "code": "T-06",
+  "title": "Rimfire 12-Bull",
+  "desc": "Ten 1.5 in. record bulls plus two sighters. Built for 50 ft / 25 yd rimfire and air rifle practice.",
+  "section": "Targets",
+  "page": 7
+ },
+ {
+  "code": "T-07",
+  "title": "Ten-Dot Drill",
+  "desc": "2 in. and 1 in. dots. Run each numbered string in order. Any miss on a string means you rerun it.",
+  "section": "Targets",
+  "page": 8
+ },
+ {
+  "code": "T-08",
+  "title": "Reduced Silhouette",
+  "desc": "Generic torso and head with scoring zones. Reduced size: shooting it at 10 yd looks like a full-size target at about 30 yd.",
+  "section": "Targets",
+  "page": 9
+ },
+ {
+  "code": "T-09",
+  "title": "Shapes & Numbers",
+  "desc": "Call-out drill. A partner calls a shape, a color, or a number and you engage only that target. Builds target ID under time.",
+  "section": "Targets",
+  "page": 10
+ },
+ {
+  "code": "T-10",
+  "title": "Tic-Tac-Toe",
+  "desc": "Two shooters, one target. Hit a square to claim it with your color of marker. First to three in a row wins.",
+  "section": "Targets",
+  "page": 11
+ },
+ {
+  "code": "T-11",
+  "title": "Plate Rack",
+  "desc": "Two racks of six 1 in. plates plus a stop plate. At 10 yd each plate matches a 4 in. steel plate at 40 yd.",
+  "section": "Targets",
+  "page": 12
+ },
+ {
+  "code": "T-12",
+  "title": "Error Diagnosis",
+  "desc": "For a right-handed handgun shooter (mirror it if left-handed). Fire 10 slow shots at the center, then read where they cluster.",
+  "section": "Targets",
+  "page": 13
+ },
+ {
+  "code": "T-13",
+  "title": "Load Development",
+  "desc": "Ten 1 in. diamonds for a ladder or OCW test. Write the charge and seating depth under each.",
+  "section": "Targets",
+  "page": 14
+ },
+ {
+  "code": "T-14",
+  "title": "Transitions",
+  "desc": "Three head boxes spread wide. Draw, one shot each left to right, then right to left. Push speed, keep hits in the box.",
+  "section": "Targets",
+  "page": 15
+ },
+ {
+  "code": "T-15",
+  "title": "Half-Inch Grid",
+  "desc": "Blank 1/2 in. grid with a center cross. Use it for anything: group measuring, custom drills, or a backer.",
+  "section": "Targets",
+  "page": 16
+ },
+ {
+  "code": "T-16",
+  "title": "Range Log",
+  "desc": "Record each group. Measure center-to-center (largest spread minus one bullet diameter).",
+  "section": "Targets",
+  "page": 17
+ },
+ {
+  "code": "T-17",
+  "title": "Pocket DOPE Cards",
+  "desc": "Four 3.5 x 4.25 in. cards. Cut on the dashed lines, fill in your come-ups, and tape one to the stock or keep it in a sleeve.",
+  "section": "Shooter Tools",
+  "page": 18
+ },
+ {
+  "code": "T-18",
+  "title": "Full DOPE Sheet",
+  "desc": "One rifle, 50 yd steps out to 1000. Record conditions at the top so you know what the data was shot in.",
+  "section": "Shooter Tools",
+  "page": 19
+ },
+ {
+  "code": "T-19",
+  "title": "Angular Reference",
+  "desc": "How big a MOA, a mil and one click are at each distance, plus range-estimation and conversion formulas.",
+  "section": "Shooter Tools",
+  "page": 20
+ },
+ {
+  "code": "T-20",
+  "title": "Wind Card",
+  "desc": "Wind value by clock direction, field cues for estimating speed, and a blank hold table for your load.",
+  "section": "Shooter Tools",
+  "page": 21
+ },
+ {
+  "code": "T-21",
+  "title": "Round Count Log",
+  "desc": "Track rounds, cleaning, parts and malfunctions for one firearm. Helps you replace springs and barrels on schedule.",
+  "section": "Shooter Tools",
+  "page": 22
+ },
+ {
+  "code": "T-22",
+  "title": "Range Day Checklist",
+  "desc": "Run through this before you leave the house. Laminate it and check boxes with a dry-erase marker.",
+  "section": "Shooter Tools",
+  "page": 23
+ },
+ {
+  "code": "T-23",
+  "title": "36-Yard Zero",
+  "desc": "Grid squares are 1 MOA at 36 yd (0.377 in.). A common carbine zero distance. Confirm at your far distance afterward.",
+  "section": "Field Kit",
+  "page": 24
+ },
+ {
+  "code": "T-24",
+  "title": "Data Book Page",
+  "desc": "One page per string. Plot where you called each shot and where it hit. The gap between the two shows what to fix.",
+  "section": "Field Kit",
+  "page": 25
+ },
+ {
+  "code": "T-25",
+  "title": "Metric DOPE Cards",
+  "desc": "Four cut-out cards ranged in meters (100-1000 m) for mil-based optics. Same layout as the yard cards.",
+  "section": "Field Kit",
+  "page": 26
+ },
+ {
+  "code": "T-26",
+  "title": "Range Card",
+  "desc": "Sketch your sector from your position: left and right limits, reference points and their ranges. Fill in the table to match.",
+  "section": "Field Kit",
+  "page": 27
+ },
+ {
+  "code": "T-27",
+  "title": "Range Estimation",
+  "desc": "Mil-relation table in meters. Measure the target in mils through your reticle, find its row, and read the range.",
+  "section": "Field Kit",
+  "page": 28
+ },
+ {
+  "code": "T-28",
+  "title": "Fundamentals Card",
+  "desc": "Safety rules, the marksmanship fundamentals, position checkpoints and immediate action for a stoppage. Laminate for the range bag.",
+  "section": "Field Kit",
+  "page": 29
+ },
+ {
+  "code": "T-29",
+  "title": "Dry-Fire Log",
+  "desc": "Daily dry practice tracker. Unload, move all ammo out of the room, verify empty, and pick a safe backstop before every session.",
+  "section": "Field Kit",
+  "page": 30
+ },
+ {
+  "code": "T-30",
+  "title": "FBI Q-Style",
+  "desc": "Bottle-shaped 'Q' target used in law enforcement qualification. Any hit inside the bottle counts.",
+  "section": "Agency & Military",
+  "page": 31
+ },
+ {
+  "code": "T-31",
+  "title": "FBI QIT-Style",
+  "desc": "Q bottle with the lower part cut off by a dashed line. Only hits inside the bottle and above the line count.",
+  "section": "Agency & Military",
+  "page": 32
+ },
+ {
+  "code": "T-32",
+  "title": "FBI Pistol Qual Card",
+  "desc": "The publicly reported FBI pistol qualification: 60 rounds on a QIT-style target, 48 hits to pass. Score each stage below.",
+  "section": "Agency & Military",
+  "page": 33
+ },
+ {
+  "code": "T-33",
+  "title": "Police Silhouette",
+  "desc": "B-27-style law enforcement silhouette with scoring rings 7 to 10 around center mass. Training replica.",
+  "section": "Agency & Military",
+  "page": 34
+ },
+ {
+  "code": "T-34",
+  "title": "Military E-Type",
+  "desc": "Standard military head-and-torso silhouette (about 19.5 x 40 in. full size). Any hit on the silhouette counts.",
+  "section": "Agency & Military",
+  "page": 35
+ },
+ {
+  "code": "T-35",
+  "title": "Military F-Type",
+  "desc": "Head-and-shoulders silhouette (about 19.5 x 23 in. full size), representing a target behind cover.",
+  "section": "Agency & Military",
+  "page": 36
+ },
+ {
+  "code": "T-36",
+  "title": "Scaled Distance Silhouettes",
+  "desc": "E- and F-type silhouettes shrunk to simulate 100-300 m when shot from 10 m. Build distance skills on a short range.",
+  "section": "Agency & Military",
+  "page": 37
+ },
+ {
+  "code": "T-37",
+  "title": "Practical Competition",
+  "desc": "USPSA/IPSC-style action shooting target with A, C and D zones and head box. Training replica.",
+  "section": "Agency & Military",
+  "page": 38
+ }
+]

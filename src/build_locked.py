@@ -806,8 +806,205 @@ def t29(c):
     label(c, CX, 1.55 * inch, "Ideas: draw to first shot, reloads, trigger press on a dot, transitions, position changes, malfunction clears.", 7.5)
 
 
+# ---------------- agency & military (training replicas) ----------------
+REPLICA = "Training replica, approximate proportions. Use your issued target for official qualification."
+OLIVE = HexColor("#5B6142")
+SAND = HexColor("#D9C8A9")
+
+
+def scale_note(c, txt):
+    label(c, CX, 1.55 * inch, txt, 7.5, True)
+    label(c, CX, 1.38 * inch, REPLICA, 6.5)
+
+
+def silhouette_path(c, bx, by, s, w, torso_h, neck_w, neck_y, head_w, head_h, head_y):
+    """Head-and-torso silhouette. Full-size inches times scale s. bx,by = bottom center (pt)."""
+    u = s * inch
+    p = c.beginPath()
+    p.moveTo(bx - w / 2 * u, by)
+    p.lineTo(bx - w / 2 * u, by + torso_h * u)
+    p.curveTo(bx - w / 2 * u, by + (neck_y - 0.3) * u, bx - neck_w / 2 * u, by + (neck_y - 1.5) * u, bx - neck_w / 2 * u, by + neck_y * u)
+    p.lineTo(bx + neck_w / 2 * u, by + neck_y * u)
+    p.curveTo(bx + neck_w / 2 * u, by + (neck_y - 1.5) * u, bx + w / 2 * u, by + (neck_y - 0.3) * u, bx + w / 2 * u, by + torso_h * u)
+    p.lineTo(bx + w / 2 * u, by)
+    p.close()
+    c.drawPath(p, stroke=0, fill=1)
+    c.ellipse(bx - head_w / 2 * u, by + head_y * u, bx + head_w / 2 * u, by + (head_y + head_h) * u, stroke=0, fill=1)
+
+
+def e_type(c, bx, by, s, col=OLIVE):
+    c.setFillColor(col)
+    silhouette_path(c, bx, by, s, 19.5, 24, 7, 29.5, 10, 11, 28.5)  # ~19.5 x 40 in.
+
+
+def f_type(c, bx, by, s, col=OLIVE):
+    c.setFillColor(col)
+    silhouette_path(c, bx, by, s, 19.5, 8, 7, 13, 10, 10, 12.5)  # ~19.5 x 23 in.
+
+
+def bottle(c, bx, by, s, fillcol, stroke=True):
+    """Q-style bottle outline, full size about 12 x 30 in."""
+    u = s * inch
+    p = c.beginPath()
+    p.moveTo(bx - 6 * u, by + 1.5 * u)
+    p.curveTo(bx - 6 * u, by, bx - 6 * u, by, bx - 4.5 * u, by)
+    p.lineTo(bx + 4.5 * u, by)
+    p.curveTo(bx + 6 * u, by, bx + 6 * u, by, bx + 6 * u, by + 1.5 * u)
+    p.lineTo(bx + 6 * u, by + 19 * u)
+    p.curveTo(bx + 6 * u, by + 22.5 * u, bx + 2.5 * u, by + 22 * u, bx + 2.5 * u, by + 24.5 * u)
+    p.lineTo(bx + 2.5 * u, by + 28.5 * u)
+    p.curveTo(bx + 2.5 * u, by + 30 * u, bx - 2.5 * u, by + 30 * u, bx - 2.5 * u, by + 28.5 * u)
+    p.lineTo(bx - 2.5 * u, by + 24.5 * u)
+    p.curveTo(bx - 2.5 * u, by + 22 * u, bx - 6 * u, by + 22.5 * u, bx - 6 * u, by + 19 * u)
+    p.close()
+    c.setFillColor(fillcol); c.setStrokeColor(DK); c.setLineWidth(1.2)
+    c.drawPath(p, stroke=1 if stroke else 0, fill=1)
+
+
+@target("T-30", "FBI Q-Style", "Bottle-shaped 'Q' target used in law enforcement qualification. Any hit inside the bottle counts.")
+def t30(c):
+    s = 0.25
+    by = 2.0 * inch
+    c.setFillColor(LG); c.rect(CX - 11.5 * s * inch, by - 1.5 * s * inch, 23 * s * inch, 32.5 * s * inch, stroke=0, fill=1)
+    bottle(c, CX, by, s, white)
+    scale_note(c, "Scale 25% (1:4). At 7 yd it appears like the full target at 28 yd.")
+
+
+@target("T-31", "FBI QIT-Style", "Q bottle with the lower part cut off by a dashed line. Only hits inside the bottle and above the line count.")
+def t31(c):
+    s = 0.25
+    by = 2.0 * inch
+    c.setFillColor(LG); c.rect(CX - 11.5 * s * inch, by - 1.5 * s * inch, 23 * s * inch, 32.5 * s * inch, stroke=0, fill=1)
+    bottle(c, CX, by, s, white)
+    c.setStrokeColor(DK); c.setLineWidth(1); c.setDash(5, 3)
+    c.line(CX - 6 * s * inch, by + 10 * s * inch, CX + 6 * s * inch, by + 10 * s * inch); c.setDash()
+    label(c, CX, by + 5 * s * inch, "NO SCORE", 9, True, col=GR)
+    label(c, CX, by + 18 * s * inch, "SCORING", 9, True, col=OR)
+    scale_note(c, "Scale 25% (1:4). At 7 yd it appears like the full target at 28 yd.")
+
+
+@target("T-32", "FBI Pistol Qual Card", "The publicly reported FBI pistol qualification: 60 rounds on a QIT-style target, 48 hits to pass. Score each stage below.")
+def t32(c):
+    stages = [
+        ("3 yd", "12 rds", ["Draw, 3 rds strong hand only in 3 s. Do twice.",
+                           "Draw, 3 rds strong hand, switch to support hand, 3 rds. 8 s total."]),
+        ("5 yd", "12 rds", ["Draw, 3 rds in 3 s. Do four times."]),
+        ("7 yd", "16 rds", ["Draw, 4 rds in 4 s. Do twice.",
+                           "Draw, 4 rds, reload, 4 rds. 8 s total."]),
+        ("15 yd", "10 rds", ["Draw, 3 rds in 6 s. Do twice.",
+                            "Draw, 4 rds in 8 s."]),
+        ("25 yd", "10 rds", ["From the start line, move to cover, draw, 2 rds standing,",
+                            "kneel, 3 rds. 15 s. Do twice."]),
+    ]
+    x0, y = 0.75 * inch, 9.85 * inch
+    for dist, rds, lines in stages:
+        c.setFillColor(OR); c.rect(x0, y - 4, 7 * inch, 0.26 * inch, stroke=0, fill=1)
+        label(c, x0 + 8, y + 3, dist, 10, True, col=white, center=False)
+        label(c, x0 + 0.85 * inch, y + 3, rds, 9, col=white, center=False)
+        c.setFillColor(white); c.setFont("Helvetica-Bold", 8)
+        c.drawRightString(x0 + 7 * inch - 8, y + 3, "HITS ____  /  " + rds.split()[0])
+        y -= 0.3 * inch
+        for ln in lines:
+            label(c, x0 + 10, y - 2, ln, 9.5, center=False); y -= 0.24 * inch
+        y -= 0.22 * inch
+    c.setStrokeColor(DK); c.setLineWidth(1.2)
+    c.rect(x0, y - 0.9 * inch, 7 * inch, 0.95 * inch)
+    label(c, x0 + 12, y - 0.3 * inch, "TOTAL HITS", 11, True, center=False)
+    label(c, x0 + 12, y - 0.55 * inch, "Pass = 48 of 60 (80%). Hits must be inside the bottle, above the dashed line.", 8, center=False)
+    c.rect(x0 + 5.3 * inch, y - 0.75 * inch, 1.5 * inch, 0.65 * inch)
+    label(c, x0 + 6.05 * inch, y - 0.85 * inch - 4, "/ 60", 9)
+    label(c, CX, 1.55 * inch, "Course details are as publicly reported (ShootingWire, FBI qualification feature). Agencies update courses; confirm the current version.", 6.8)
+
+
+@target("T-33", "Police Silhouette", "B-27-style law enforcement silhouette with scoring rings 7 to 10 around center mass. Training replica.")
+def t33(c):
+    s = 0.2
+    bx, by = CX, 1.9 * inch
+    c.setFillColor(LG); c.rect(bx - 12 * s * inch, by - 1 * s * inch, 24 * s * inch, 41 * s * inch, stroke=0, fill=1)
+    c.setFillColor(DK)
+    silhouette_path(c, bx, by, s, 22, 25, 7.5, 29.5, 9.5, 10.5, 28.5)
+    cy = by + 17 * s * inch
+    for w, h, n in [(16, 24, "7"), (12, 18, "8"), (8, 12, "9"), (4, 6, "10")]:
+        c.setStrokeColor(white); c.setLineWidth(0.8)
+        c.ellipse(bx - w / 2 * s * inch, cy - h / 2 * s * inch, bx + w / 2 * s * inch, cy + h / 2 * s * inch, stroke=1, fill=0)
+        label(c, bx, cy + (h / 2 - 1.8) * s * inch, n, 7, True, col=white)
+    label(c, bx, by + 33 * s * inch - 3, "8", 7, True, col=white)
+    scale_note(c, "Scale 20% (1:5) of full size. At 5 yd it appears like the full target at 25 yd.")
+
+
+@target("T-34", "Military E-Type", "Standard military head-and-torso silhouette (about 19.5 x 40 in. full size). Any hit on the silhouette counts.")
+def t34(c):
+    s = 0.2
+    e_type(c, CX, 1.95 * inch, s)
+    c.setStrokeColor(GR); c.setLineWidth(0.5)
+    c.line(CX - 2.5 * inch, 1.95 * inch, CX + 2.5 * inch, 1.95 * inch)
+    scale_note(c, "Scale 20% (1:5). At 25 m it appears like a full E-type at 125 m; at 60 m, like 300 m.")
+
+
+@target("T-35", "Military F-Type", "Head-and-shoulders silhouette (about 19.5 x 23 in. full size), representing a target behind cover.")
+def t35(c):
+    s = 0.3
+    f_type(c, CX, 3.1 * inch, s)
+    c.setStrokeColor(GR); c.setLineWidth(0.5)
+    c.line(CX - 3.2 * inch, 3.1 * inch, CX + 3.2 * inch, 3.1 * inch)
+    scale_note(c, "Scale 30%. At 15 m it appears like a full F-type at 50 m; at 30 m, like 100 m.")
+
+
+@target("T-36", "Scaled Distance Silhouettes", "E- and F-type silhouettes shrunk to simulate 100-300 m when shot from 10 m. Build distance skills on a short range.")
+def t36(c):
+    items = [("E", 100), ("E", 150), ("E", 200), ("E", 250), ("E", 300), ("F", 100)]
+    pos = [(1.85, 5.8), (4.25, 5.8), (6.65, 5.8), (1.85, 2.15), (4.25, 2.15), (6.65, 2.15)]
+    for (kind, d), (x, y) in zip(items, pos):
+        s = 10 / d
+        (f_type if kind == "F" else e_type)(c, x * inch, y * inch, s)
+        label(c, x * inch, y * inch - 13, f"{d} m", 10, True, col=OR)
+        label(c, x * inch, y * inch - 23, f"{kind}-type at {s*100:.1f}%", 6.5)
+    label(c, CX, 1.55 * inch, "Shoot from exactly 10 m (11 yd). Each silhouette then looks the size of a full one at the marked distance.", 7.5, True)
+    label(c, CX, 1.38 * inch, "Bullet drop is still only 10 m worth: this trains aiming and target size, not holdover.", 6.5)
+    label(c, CX, 1.25 * inch, REPLICA, 6.5)
+
+
+@target("T-37", "Practical Competition", "USPSA/IPSC-style action shooting target with A, C and D zones and head box. Training replica.")
+def t37(c):
+    s = 0.25
+    u = s * inch
+    bx, by = CX - 0.6 * inch, 1.95 * inch
+
+    def octo(w, h, clip, y0, fill):
+        p = c.beginPath()
+        p.moveTo(bx - w / 2 * u + clip * u, by + y0 * u)
+        p.lineTo(bx + w / 2 * u - clip * u, by + y0 * u)
+        p.lineTo(bx + w / 2 * u, by + (y0 + clip) * u)
+        p.lineTo(bx + w / 2 * u, by + (y0 + h - clip) * u)
+        p.lineTo(bx + w / 2 * u - clip * u, by + (y0 + h) * u)
+        p.lineTo(bx - w / 2 * u + clip * u, by + (y0 + h) * u)
+        p.lineTo(bx - w / 2 * u, by + (y0 + h - clip) * u)
+        p.lineTo(bx - w / 2 * u, by + (y0 + clip) * u)
+        p.close()
+        c.setFillColor(fill); c.setStrokeColor(DK); c.setLineWidth(0.8)
+        c.drawPath(p, stroke=1, fill=1)
+
+    octo(18, 24, 4.5, 0, SAND)              # D
+    octo(12, 18, 3, 3, SAND)                # C
+    c.setDash(3, 2); c.setStrokeColor(DK); c.setFillColor(SAND)
+    c.rect(bx - 3 * u, by + 9.5 * u, 6 * u, 11 * u, stroke=1, fill=0)  # A body
+    c.setDash()
+    c.rect(bx - 3 * u, by + 24 * u, 6 * u, 6 * u, stroke=1, fill=1)  # head
+    c.setDash(3, 2)
+    c.rect(bx - 2 * u, by + 26 * u, 4 * u, 2 * u, stroke=1, fill=0)  # head A
+    c.setDash()
+    for txt, yy in [("A", 15), ("C", 5.5), ("D", 1.3)]:
+        label(c, bx, by + yy * u, txt, 12, True)
+    label(c, bx, by + 26.6 * u, "A", 8, True)
+    label(c, bx + 2.6 * inch, by + 22 * u, "A  5 pts", 8, True, center=False)
+    label(c, bx + 2.6 * inch, by + 22 * u - 12, "C  3 or 4 pts", 8, True, center=False)
+    label(c, bx + 2.6 * inch, by + 22 * u - 24, "D  1 or 2 pts", 8, True, center=False)
+    label(c, bx + 2.6 * inch, by + 22 * u - 36, "(minor / major)", 6.5, center=False)
+    scale_note(c, "Scale 25% (1:4). At 7 yd it appears like a full-size target at 28 yd.")
+
+
 # ---------------- build ----------------
-SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 99)]
+SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 29), ("AGENCY & MILITARY", 29, 99)]
 
 
 def cover(c):
@@ -818,11 +1015,11 @@ def cover(c):
     c.setFillColor(white); c.setFont("Helvetica-Bold", 56)
     c.drawString(0.7 * inch, 9.5 * inch, "LOCKED")
     c.setFont("Helvetica", 11)
-    c.drawString(0.75 * inch, 9.12 * inch, f"Targets, data and field tools  |  {len(PAGES)} pages  |  US Letter, true scale")
+    c.drawString(0.75 * inch, 9.12 * inch, f"Targets, data, field tools and agency drills  |  {len(PAGES)} pages  |  US Letter, true scale")
     colx = [0.75 * inch, 4.4 * inch]
-    layout = [(0, SECTIONS[0]), (1, SECTIONS[1]), (1, SECTIONS[2])]
+    layout = [(0, SECTIONS[0]), (1, SECTIONS[1]), (1, SECTIONS[2]), (1, SECTIONS[3])]
     ys = [8.3 * inch, 8.3 * inch]
-    rh = 0.36 * inch
+    rh = 0.29 * inch
     for col, (name, a0, a1) in layout:
         x = colx[col]; y = ys[col]
         c.setFillColor(OR); c.setFont("Helvetica-Bold", 9)
@@ -836,7 +1033,7 @@ def cover(c):
             c.setFillColor(HexColor("#AAAAAA")); c.setFont("Helvetica", 9); c.drawRightString(x + 3.35 * inch, y, str(i + 2))
             c.linkRect("", f"p{i}", (x - 4, y - 8, x + 3.4 * inch, y + 12), relative=0)
             y -= rh
-        ys[col] = y - 0.2 * inch
+        ys[col] = y - 0.12 * inch
     c.setFont("Helvetica", 8); c.setFillColor(HexColor("#AAAAAA"))
     c.drawString(0.75 * inch, 0.9 * inch, "To print one target, print just its page number. Always print at 100% / Actual Size so the scales stay true.")
     c.drawString(0.75 * inch, 0.72 * inch, "Tap any row to jump to that page. Laminate the cards and checklists for field use.")
@@ -854,4 +1051,12 @@ for i, (code, title, sub, fn) in enumerate(PAGES):
     footer(c, code)
     c.showPage()
 c.save()
+
+import json
+meta = []
+for i, (code, title, sub, _) in enumerate(PAGES):
+    sec = next(n for n, a0, a1 in SECTIONS if a0 <= i < a1)
+    meta.append({"code": code, "title": title, "desc": sub, "section": sec.title().replace("&", "&"), "page": i + 2})
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "pages.json"), "w") as f:
+    json.dump(meta, f, indent=1)
 print(len(PAGES))
