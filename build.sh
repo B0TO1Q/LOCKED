@@ -5,6 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 python3 src/build_locked.py
+python3 src/build_deck.py
 
 rm -rf svg && mkdir svg
 python3 - <<'EOF'

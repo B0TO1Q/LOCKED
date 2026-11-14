@@ -135,7 +135,7 @@ DRILLS = {
 
 
 DRILLS["T-38"] = [
-    ("Camp Round", "25 yd  ·  1 rd each", "Everyone gets one shot at a real card, then you all walk up together. Anyone who splits it signs the Split Club."),
-    ("Ladder Climb", "25 yd  ·  5+ rds", "Start on the 1/4 bar. Move to the next bar only after you touch the one you are on. Finish on the true edge."),
-    ("Step Back", "15 yd start  ·  1 rd per card", "After every split, step back 5 yd and set a fresh card. Longest split of the day wins."),
+    ("Camp Game", "25 yd  ·  1 rd per flip", "The standard game. Closest to the center dot wins the round, first to 5 wins."),
+    ("Speed Flip", "15 yd  ·  1 rd  ·  par 4 s", "On the call, find the card and fire within 4 seconds. Late or a miss scores nothing."),
+    ("Run a Suit", "25 yd  ·  13 rds", "Pick one suit and shoot Ace through King in order. Count how many you hit in one try."),
 ]

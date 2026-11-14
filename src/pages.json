@@ -750,25 +750,25 @@
  },
  {
   "code": "T-38",
-  "title": "Card Edge",
-  "desc": "The classic trick shot: split a playing card on edge. Warm up on the pip, climb the paper edge ladder, then set a real card.",
+  "title": "Pick a Card",
+  "desc": "Camp game for any number of shooters. Flip a real card, everyone shoots it, closest to center wins.",
   "section": "Deck",
   "page": 39,
   "drills": [
    [
-    "Camp Round",
-    "25 yd  \u00b7  1 rd each",
-    "Everyone gets one shot at a real card, then you all walk up together. Anyone who splits it signs the Split Club."
+    "Camp Game",
+    "25 yd  \u00b7  1 rd per flip",
+    "The standard game. Closest to the center dot wins the round, first to 5 wins."
    ],
    [
-    "Ladder Climb",
-    "25 yd  \u00b7  5+ rds",
-    "Start on the 1/4 bar. Move to the next bar only after you touch the one you are on. Finish on the true edge."
+    "Speed Flip",
+    "15 yd  \u00b7  1 rd  \u00b7  par 4 s",
+    "On the call, find the card and fire within 4 seconds. Late or a miss scores nothing."
    ],
    [
-    "Step Back",
-    "15 yd start  \u00b7  1 rd per card",
-    "After every split, step back 5 yd and set a fresh card. Longest split of the day wins."
+    "Run a Suit",
+    "25 yd  \u00b7  13 rds",
+    "Pick one suit and shoot Ace through King in order. Count how many you hit in one try."
    ]
   ],
   "drillPage": 45

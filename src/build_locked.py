@@ -1,4 +1,5 @@
 import os
+import sys
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.colors import HexColor, black, white
@@ -1005,109 +1006,47 @@ def t37(c):
 
 
 # ---------------- deck ----------------
-def spade(c, x, y, s, col=DK):
-    """Spade pip centered at x,y, s = height in points."""
-    p = c.beginPath()
-    p.moveTo(x, y + 0.5 * s)
-    p.curveTo(x + 0.15 * s, y + 0.25 * s, x + 0.5 * s, y + 0.1 * s, x + 0.45 * s, y - 0.15 * s)
-    p.curveTo(x + 0.4 * s, y - 0.36 * s, x + 0.14 * s, y - 0.36 * s, x + 0.04 * s, y - 0.2 * s)
-    p.lineTo(x + 0.13 * s, y - 0.5 * s)
-    p.lineTo(x - 0.13 * s, y - 0.5 * s)
-    p.lineTo(x - 0.04 * s, y - 0.2 * s)
-    p.curveTo(x - 0.14 * s, y - 0.36 * s, x - 0.4 * s, y - 0.36 * s, x - 0.45 * s, y - 0.15 * s)
-    p.curveTo(x - 0.5 * s, y + 0.1 * s, x - 0.15 * s, y + 0.25 * s, x, y + 0.5 * s)
-    p.close()
-    c.setFillColor(col)
-    c.drawPath(p, stroke=0, fill=1)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cards import draw_card as _draw_card
 
 
-def card_index(c, x, y, rank, flip=False):
-    c.saveState()
-    c.translate(x, y)
-    if flip:
-        c.rotate(180)
-    label(c, 0, -14, rank, 15, True)
-    spade(c, 0, -26, 11)
-    c.restoreState()
-
-
-@target("T-38", "Card Edge", "The classic trick shot: split a playing card on edge. Warm up on the pip, climb the paper edge ladder, then set a real card.")
+@target("T-38", "Pick a Card", "Camp game for any number of shooters. Flip a real card, everyone shoots it, closest to center wins.")
 def t38(c):
-    # warm-up card, true size 2.5 x 3.5 in
-    cx0, ctop = 0.85 * inch, 9.75 * inch
-    cw, ch = 2.5 * inch, 3.5 * inch
-    c.setFillColor(white); c.setStrokeColor(DK); c.setLineWidth(1)
-    c.roundRect(cx0, ctop - ch, cw, ch, 0.14 * inch, stroke=1, fill=1)
-    card_index(c, cx0 + 0.22 * inch, ctop - 0.05 * inch, "A")
-    card_index(c, cx0 + cw - 0.22 * inch, ctop - ch + 0.05 * inch, "A", flip=True)
-    spade(c, cx0 + cw / 2, ctop - ch / 2, 1.25 * inch)
-    c.setFillColor(OR); c.circle(cx0 + cw / 2, ctop - ch / 2 + 0.02 * inch, 0.07 * inch, stroke=0, fill=1)
-    label(c, cx0 + cw / 2, ctop - ch - 13, "WARM-UP: hit the pip. True card size.", 7.5, True)
+    # sample card at true size
+    _draw_card(c, 0.85 * inch, 6.3 * inch, "7", "H")
+    label(c, 0.85 * inch + 1.25 * inch, 6.3 * inch - 13, "Real size: 2.5 x 3.5 in.", 7.5, True)
 
-    # split club roster
-    rx = 3.75 * inch
-    label(c, rx, 9.62 * inch, "SPLIT CLUB", 13, True, center=False)
-    label(c, rx + 1.12 * inch, 9.62 * inch, "Cut a real card in two? Sign it.", 7.5, center=False)
-    cols = [("NAME", 1.3), ("DATE", 0.75), ("DIST", 0.6), ("FIREARM", 1.35)]
-    table(c, rx, 9.5 * inch, cols, 8, 0.32 * inch, size=7)
+    x = 3.75 * inch
+    label(c, x, 9.62 * inch, "HOW TO PLAY", 11, True, col=OR, center=False)
+    steps = [
+        ("1", "Hang the deck 25 yd out in front of a safe backstop."),
+        ("2", "Someone flips a card from a real deck and calls it out."),
+        ("3", "Everyone fires one shot at that card."),
+        ("4", "Closest to the white center dot wins the round."),
+        ("5", "Miss the card and you are out for that round."),
+        ("6", "First to 5 round wins takes the game."),
+    ]
+    for i, (n, t) in enumerate(steps):
+        y = (9.3 - i * 0.38) * inch
+        c.setFillColor(DK); c.circle(x + 8, y + 3, 8, stroke=0, fill=1)
+        label(c, x + 8, y, n, 8, True, col=white)
+        label(c, x + 24, y, t, 9, center=False)
+    label(c, x, 6.95 * inch, "Flip a Joker and everyone shoots a Joker.", 8.5, True, center=False)
+    label(c, x, 6.75 * inch, "No deck? Use the Flip button on the website.", 8.5, center=False)
 
-    # edge ladder
-    top, bot = 5.15 * inch, 2.55 * inch
-    label(c, 0.85 * inch, 5.82 * inch, "EDGE LADDER", 11, True, center=False)
-    label(c, 0.85 * inch, 5.65 * inch, "Each bar is thinner. A hit counts when the hole touches the bar.", 7, center=False)
-    bars = [("1/4", 0.25, 1), ("1/8", 0.125, 2), ("1/16", 0.0625, 3), ("1/32", 0.03125, 4), ("TRUE", 0.012, 5)]
-    for i, (name, w, pts) in enumerate(bars):
-        x = (1.2 + i * 0.72) * inch
-        c.setFillColor(HexColor("#F1F0EC")); c.rect(x - 0.3 * inch, bot, 0.6 * inch, top - bot, stroke=0, fill=1)
-        c.setFillColor(DK); c.rect(x - w * inch / 2, bot, w * inch, top - bot, stroke=0, fill=1)
-        p = c.beginPath(); p.moveTo(x, top + 4); p.lineTo(x - 5, top + 13); p.lineTo(x + 5, top + 13); p.close()
-        c.setFillColor(OR); c.drawPath(p, stroke=0, fill=1)
-        label(c, x, top + 17, name, 8, True)
-        label(c, x, bot - 12, f"{pts} PT" + ("S" if pts > 1 else ""), 7, True, col=OR)
-    label(c, 2.64 * inch, bot - 26, "TRUE = real card thickness, about 0.012 in.", 6.5)
+    # get the deck
+    y0 = 5.75 * inch
+    c.setFillColor(DK); c.rect(0.75 * inch, y0 - 1.05 * inch, 7 * inch, 1.3 * inch, stroke=0, fill=1)
+    label(c, 0.95 * inch, y0, "PRINT THE DECK", 9, True, col=OR, center=False)
+    label(c, 0.95 * inch, y0 - 0.25 * inch, "Poster: one 24 x 36 in. sheet from a print shop.   deck/Pick_a_Card_Poster_A.pdf", 8, col=white, center=False)
+    label(c, 0.95 * inch, y0 - 0.45 * inch, "Home: nine Letter sheets that tape into a 3 x 3 board.   deck/Pick_a_Card_Home_A.pdf", 8, col=white, center=False)
+    label(c, 0.95 * inch, y0 - 0.7 * inch, "Four shuffles, A to D, each with the cards in a different spot. Swap shuffles so nobody", 8, col=HexColor("#BBBBBB"), center=False)
+    label(c, 0.95 * inch, y0 - 0.87 * inch, "memorizes the board. Every card is printed at true size: print at 100%.", 8, col=HexColor("#BBBBBB"), center=False)
 
-    # real card station
-    sx = 5.3 * inch
-    label(c, 4.95 * inch, 5.82 * inch, "REAL CARD STATION", 11, True, center=False)
-    mid = (top + bot) / 2
-    s_top, s_bot = mid + 1.25 * inch, mid - 1.25 * inch
-    c.setStrokeColor(OR); c.setLineWidth(1.4)
-    for yy in (s_top + 0.05 * inch, s_bot - 0.05 * inch):
-        c.line(sx - 0.35 * inch, yy, sx + 0.35 * inch, yy)
-    c.line(sx, s_top + 0.05 * inch, sx, s_top + 0.25 * inch); c.line(sx, s_bot - 0.05 * inch, sx, s_bot - 0.25 * inch)
-    c.setStrokeColor(DK); c.setLineWidth(1); c.setDash(5, 3)
-    c.line(sx, s_top, sx, s_bot); c.setDash()
-    label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.2 * inch, "CUT", 7, True, center=False)
-    label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.05 * inch, "SLIT", 7, True, center=False)
-    # top-view diagram: looking down from above
-    dx = 6.55 * inch
-    by_ = 3.7 * inch                       # front face of the cardboard
-    label(c, 5.75 * inch, 3.93 * inch, "TOP VIEW  (looking down from above)", 6.5, True, center=False)
-    c.setFillColor(GR); c.rect(dx - 0.75 * inch, by_, 1.5 * inch, 0.09 * inch, stroke=0, fill=1)
-    c.setFillColor(DK); c.rect(dx - 0.75 * inch, by_ + 0.09 * inch, 1.5 * inch, 0.012 * inch * 4, stroke=0, fill=1)
-    label(c, dx + 0.8 * inch, by_ + 0.01 * inch, "CARDBOARD", 6, True, center=False)
-    label(c, dx + 0.8 * inch, by_ - 0.1 * inch, "+ this sheet", 6, center=False)
-    # card: pokes through the slit, sticks out toward the shooter
-    c.setStrokeColor(OR); c.setLineWidth(2.5)
-    c.line(dx, by_ + 0.16 * inch, dx, by_ - 0.55 * inch)
-    label(c, dx + 0.1 * inch, by_ - 0.3 * inch, "CARD", 6.5, True, col=OR, center=False)
-    label(c, dx + 0.1 * inch, by_ - 0.41 * inch, "edge faces you", 6, col=OR, center=False)
-    # line of fire
-    c.setStrokeColor(DK); c.setLineWidth(0.8); c.setDash(3, 2)
-    c.line(dx, by_ - 0.62 * inch, dx, 2.75 * inch); c.setDash()
-    c.setFillColor(DK); p = c.beginPath(); p.moveTo(dx, by_ - 0.58 * inch); p.lineTo(dx - 4, by_ - 0.68 * inch); p.lineTo(dx + 4, by_ - 0.68 * inch); p.close(); c.drawPath(p, stroke=0, fill=1)
-    label(c, dx - 0.45 * inch, 2.98 * inch, "LINE OF", 6)
-    label(c, dx - 0.45 * inch, 2.89 * inch, "FIRE", 6)
-    label(c, dx, 2.6 * inch, "YOU", 7, True)
-    steps = ["1. Tape this sheet to cardboard.", "2. Cut a 2.5 in. slit along the", "    dashed line.", "3. Push a real card in on its short", "    edge, about 1/2 in. deep.", "4. It should point straight at you.", "5. Hold on the line. Split it."]
-    for i, t in enumerate(steps):
-        label(c, 5.75 * inch, (5.35 - i * 0.2) * inch, t, 7.5, center=False)
-
-    # rules
-    c.setFillColor(DK); c.rect(0.75 * inch, 1.3 * inch, 7 * inch, 0.72 * inch, stroke=0, fill=1)
-    label(c, 0.9 * inch, 1.82 * inch, "SCORING", 8, True, col=OR, center=False)
-    label(c, 0.9 * inch, 1.64 * inch, "Split = card cut into two pieces, sign the Split Club.   Nick = edge clipped, card still whole.", 7.5, col=white, center=False)
-    label(c, 0.9 * inch, 1.46 * inch, "Ladder: 15 points max. Set the card in front of a solid backer and a safe backstop.", 7.5, col=white, center=False)
+    # scoreboard
+    label(c, 0.75 * inch, 4.3 * inch, "SCOREBOARD", 11, True, center=False)
+    cols = [("NAME", 2.0), ("ROUND WINS", 3.4), ("GAMES", 0.8), ("NOTES", 0.8)]
+    table(c, 0.75 * inch, 4.15 * inch, cols, 7, 0.33 * inch)
 
 
 # ---------------- drill book ----------------

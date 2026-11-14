@@ -81,6 +81,22 @@ section.group > p { margin: 0 0 14px; color: var(--muted); max-width: 70ch; }
 .pick { margin-left: auto; display: inline-flex; gap: 6px; align-items: center; font-size: 13px; cursor: pointer; user-select: none; }
 .pick input { width: 17px; height: 17px; accent-color: var(--accent); }
 .empty { color: var(--muted); padding: 30px 0; }
+.deckpanel { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.deckbox { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.deckbox h3 { margin: 0 0 4px; font: 800 22px/1 var(--display); text-transform: uppercase; letter-spacing: 0.03em; }
+.deckbox p { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.dl { display: grid; grid-template-columns: auto repeat(4, minmax(0, 1fr)); gap: 6px 8px; align-items: center; font-size: 13px; }
+.dl span { font-weight: 600; }
+.dl a { justify-content: center; padding: 6px 0; }
+.flip { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.flipcard { width: 96px; aspect-ratio: 2.5 / 3.5; max-width: 100%; border: 1.5px solid var(--ink); border-radius: 8px; background: #fff; color: #222; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 800 34px/1 var(--display); }
+.flipcard.red { color: var(--accent); }
+.flipcard small { font: 600 26px/1 var(--body); margin-top: 4px; }
+.flipcard.back { background: repeating-linear-gradient(45deg, #222 0 6px, #333 6px 12px); border-color: #222; }
+.flipinfo { display: grid; gap: 8px; min-width: 0; }
+.flipinfo .call { font: 700 18px var(--body); }
+.flipinfo .left { font: 500 12px var(--mono); color: var(--muted); }
+@media (max-width: 640px) { .deckpanel { grid-template-columns: 1fr; } }
 
 .tray { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 9; background: #1D1F1C; color: #ECEBE6; border-radius: 12px; padding: 10px 10px 10px 16px; display: flex; gap: 10px; align-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.3); max-width: calc(100% - 32px); }
 .tray[hidden] { display: none; }
@@ -174,7 +190,7 @@ const SECTIONS = {
   "Shooter Tools": "DOPE cards, angular reference, wind, round count and checklist.",
   "Field Kit": "Data book, range card, range estimation and fundamentals for rifle work.",
   "Agency & Military": "Q-style, police silhouette, E- and F-type, scaled-distance and practical competition replicas, plus the FBI pistol qualification card.",
-  "Deck": "Playing-card targets for a fun day at camp. Card Edge: split a real card on edge and sign the Split Club.",
+  "Deck": "Pick a Card: a full deck at true size. Flip a card, everyone shoots it, closest to center wins.",
   "Drill Book": "Three drills for every target, with distance, round count and par time. Print these and tick off each drill as you run it clean."
 };
 const order = Object.keys(SECTIONS);
@@ -220,6 +236,62 @@ function card(p) {
   return el;
 }
 
+
+const SUITS = [["S", "\u2660", "spades"], ["H", "\u2665", "hearts"], ["D", "\u2666", "diamonds"], ["C", "\u2663", "clubs"]];
+const RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+const RNAME = { A: "Ace", J: "Jack", Q: "Queen", K: "King" };
+let pile = [], lastFlip = null;
+function newPile() {
+  pile = [];
+  SUITS.forEach(su => RANKS.forEach(r => pile.push({ r, s: su[0] })));
+  pile.push({ r: "JOKER", s: null }, { r: "JOKER", s: null });
+  for (let i = pile.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pile[i], pile[j]] = [pile[j], pile[i]]; }
+  lastFlip = null;
+}
+newPile();
+function deckPanel() {
+  const wrap = document.createElement("div"); wrap.className = "deckpanel";
+  const L = ["A", "B", "C", "D"];
+  wrap.innerHTML = `
+    <div class="deckbox">
+      <h3>Print the deck</h3>
+      <p>Four shuffles, each with the cards in different spots. Poster is one 24 x 36 in. print-shop sheet. Home is nine Letter sheets that tape into a board. Print at 100%.</p>
+      <div class="dl">
+        <span>Poster</span>${L.map(l => `<a class="btn" href="deck/Pick_a_Card_Poster_${l}.pdf">${l}</a>`).join("")}
+        <span>Home</span>${L.map(l => `<a class="btn" href="deck/Pick_a_Card_Home_${l}.pdf">${l}</a>`).join("")}
+      </div>
+    </div>
+    <div class="deckbox">
+      <h3>Flip a card</h3>
+      <p>No deck at camp? Flip here. Cards are dealt without repeats until the deck runs out.</p>
+      <div class="flip">
+        <div class="flipcard back" id="flipcard" aria-live="polite"></div>
+        <div class="flipinfo">
+          <div class="call" id="flipcall">Tap Flip to deal</div>
+          <div class="left" id="flipleft">${pile.length} cards left</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <button class="btn primary" type="button" id="flipbtn">Flip</button>
+            <button class="btn" type="button" id="reshuffle">Reshuffle</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  const show = () => {
+    const card = wrap.querySelector("#flipcard"), call = wrap.querySelector("#flipcall");
+    wrap.querySelector("#flipleft").textContent = pile.length + " cards left";
+    if (!lastFlip) { card.className = "flipcard back"; card.innerHTML = ""; call.textContent = pile.length ? "Tap Flip to deal" : "Deck is empty. Reshuffle."; return; }
+    if (!lastFlip.s) { card.className = "flipcard red"; card.innerHTML = "\u2605<small>JOKER</small>"; call.textContent = "Joker: everyone shoots a Joker"; return; }
+    const su = SUITS.find(x => x[0] === lastFlip.s);
+    card.className = "flipcard" + (lastFlip.s === "H" || lastFlip.s === "D" ? " red" : "");
+    card.innerHTML = `${lastFlip.r}<small>${su[1]}</small>`;
+    call.textContent = `${RNAME[lastFlip.r] || lastFlip.r} of ${su[2]}`;
+  };
+  wrap.querySelector("#flipbtn").addEventListener("click", () => { lastFlip = pile.length ? pile.pop() : null; show(); });
+  wrap.querySelector("#reshuffle").addEventListener("click", () => { newPile(); show(); });
+  setTimeout(show, 0);
+  return wrap;
+}
+
 function render() {
   const root = $("#groups"); root.innerHTML = "";
   let shown = 0;
@@ -232,7 +304,9 @@ function render() {
     s.innerHTML = `<h2>${sec} <small>${items.length} SHEETS</small></h2><p>${SECTIONS[sec]}</p>`;
     const g = document.createElement("div"); g.className = "grid";
     items.forEach(p => g.appendChild(card(p)));
-    s.appendChild(g); root.appendChild(s);
+    s.appendChild(g);
+    if (sec === "Deck") s.appendChild(deckPanel());
+    root.appendChild(s);
   });
   if (!shown) root.innerHTML = `<p class="empty">Nothing matches "${query}". Try a code like T-17 or a word like zero.</p>`;
 }

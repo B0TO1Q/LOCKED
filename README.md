@@ -69,7 +69,18 @@ Printable shooting targets, DOPE cards, data book pages and agency-style qualifi
 ### Deck
 | Code | Name | Use |
 |---|---|---|
-| T-38 | Card Edge | The classic trick shot: split a playing card on edge. True-size warm-up card, a paper edge ladder from 1/4 in. down to real card thickness, a guide for setting a real card on edge, and a Split Club roster. |
+| T-38 | Pick a Card | Camp game for any number of shooters: flip a real card, everyone shoots it, closest to the center dot wins. Rules and scoreboard sheet. |
+
+**The deck** (52 cards + 2 Jokers, true 2.5 x 3.5 in. size) comes in four shuffles, A to D, so nobody memorizes the board:
+
+| Shuffle | Poster (24 x 36 in., print shop) | Home (9 Letter sheets, 3 x 3 board) |
+|---|---|---|
+| A | [Poster A](deck/Pick_a_Card_Poster_A.pdf) | [Home A](deck/Pick_a_Card_Home_A.pdf) |
+| B | [Poster B](deck/Pick_a_Card_Poster_B.pdf) | [Home B](deck/Pick_a_Card_Home_B.pdf) |
+| C | [Poster C](deck/Pick_a_Card_Poster_C.pdf) | [Home C](deck/Pick_a_Card_Home_C.pdf) |
+| D | [Poster D](deck/Pick_a_Card_Poster_D.pdf) | [Home D](deck/Pick_a_Card_Home_D.pdf) |
+
+No deck at camp? The website has a **Flip a card** button that deals without repeats.
 
 ### Drill Book
 | Code | Name | Use |
