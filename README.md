@@ -1,6 +1,6 @@
 # LOCKED
 
-Printable shooting targets, DOPE cards, data book pages and agency-style qualification targets, plus a drill book. 43 sheets, US Letter (8.5 x 11 in.), true scale.
+Printable shooting targets, DOPE cards, data book pages and agency-style qualification targets, plus a drill book. 44 sheets, US Letter (8.5 x 11 in.), true scale.
 
 - **Site:** https://b0to1q.github.io/LOCKED/
 - **Full PDF:** [LOCKED.pdf](LOCKED.pdf)
@@ -65,6 +65,11 @@ Printable shooting targets, DOPE cards, data book pages and agency-style qualifi
 | T-35 | Military F-Type | Head-and-shoulders silhouette (about 19.5 x 23 in. full size), representing a target behind cover. |
 | T-36 | Scaled Distance Silhouettes | E- and F-type silhouettes shrunk to simulate 100-300 m when shot from 10 m. Build distance skills on a short range. |
 | T-37 | Practical Competition | USPSA/IPSC-style action shooting target with A, C and D zones and head box. Training replica. |
+
+### Deck
+| Code | Name | Use |
+|---|---|---|
+| T-38 | Card Edge | The classic trick shot: split a playing card on edge. True-size warm-up card, a paper edge ladder from 1/4 in. down to real card thickness, a guide for setting a real card on edge, and a Split Club roster. |
 
 ### Drill Book
 | Code | Name | Use |

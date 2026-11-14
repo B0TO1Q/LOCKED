@@ -1004,6 +1004,99 @@ def t37(c):
     scale_note(c, "Scale 25% (1:4). At 7 yd it appears like a full-size target at 28 yd.")
 
 
+# ---------------- deck ----------------
+def spade(c, x, y, s, col=DK):
+    """Spade pip centered at x,y, s = height in points."""
+    p = c.beginPath()
+    p.moveTo(x, y + 0.5 * s)
+    p.curveTo(x + 0.15 * s, y + 0.25 * s, x + 0.5 * s, y + 0.1 * s, x + 0.45 * s, y - 0.15 * s)
+    p.curveTo(x + 0.4 * s, y - 0.36 * s, x + 0.14 * s, y - 0.36 * s, x + 0.04 * s, y - 0.2 * s)
+    p.lineTo(x + 0.13 * s, y - 0.5 * s)
+    p.lineTo(x - 0.13 * s, y - 0.5 * s)
+    p.lineTo(x - 0.04 * s, y - 0.2 * s)
+    p.curveTo(x - 0.14 * s, y - 0.36 * s, x - 0.4 * s, y - 0.36 * s, x - 0.45 * s, y - 0.15 * s)
+    p.curveTo(x - 0.5 * s, y + 0.1 * s, x - 0.15 * s, y + 0.25 * s, x, y + 0.5 * s)
+    p.close()
+    c.setFillColor(col)
+    c.drawPath(p, stroke=0, fill=1)
+
+
+def card_index(c, x, y, rank, flip=False):
+    c.saveState()
+    c.translate(x, y)
+    if flip:
+        c.rotate(180)
+    label(c, 0, -14, rank, 15, True)
+    spade(c, 0, -26, 11)
+    c.restoreState()
+
+
+@target("T-38", "Card Edge", "The classic trick shot: split a playing card on edge. Warm up on the pip, climb the paper edge ladder, then set a real card.")
+def t38(c):
+    # warm-up card, true size 2.5 x 3.5 in
+    cx0, ctop = 0.85 * inch, 9.75 * inch
+    cw, ch = 2.5 * inch, 3.5 * inch
+    c.setFillColor(white); c.setStrokeColor(DK); c.setLineWidth(1)
+    c.roundRect(cx0, ctop - ch, cw, ch, 0.14 * inch, stroke=1, fill=1)
+    card_index(c, cx0 + 0.22 * inch, ctop - 0.05 * inch, "A")
+    card_index(c, cx0 + cw - 0.22 * inch, ctop - ch + 0.05 * inch, "A", flip=True)
+    spade(c, cx0 + cw / 2, ctop - ch / 2, 1.25 * inch)
+    c.setFillColor(OR); c.circle(cx0 + cw / 2, ctop - ch / 2 + 0.02 * inch, 0.07 * inch, stroke=0, fill=1)
+    label(c, cx0 + cw / 2, ctop - ch - 13, "WARM-UP: hit the pip. True card size.", 7.5, True)
+
+    # split club roster
+    rx = 3.75 * inch
+    label(c, rx, 9.62 * inch, "SPLIT CLUB", 13, True, center=False)
+    label(c, rx + 1.12 * inch, 9.62 * inch, "Cut a real card in two? Sign it.", 7.5, center=False)
+    cols = [("NAME", 1.3), ("DATE", 0.75), ("DIST", 0.6), ("FIREARM", 1.35)]
+    table(c, rx, 9.5 * inch, cols, 8, 0.32 * inch, size=7)
+
+    # edge ladder
+    top, bot = 5.15 * inch, 2.55 * inch
+    label(c, 0.85 * inch, 5.82 * inch, "EDGE LADDER", 11, True, center=False)
+    label(c, 0.85 * inch, 5.65 * inch, "Each bar is thinner. A hit counts when the hole touches the bar.", 7, center=False)
+    bars = [("1/4", 0.25, 1), ("1/8", 0.125, 2), ("1/16", 0.0625, 3), ("1/32", 0.03125, 4), ("TRUE", 0.012, 5)]
+    for i, (name, w, pts) in enumerate(bars):
+        x = (1.2 + i * 0.72) * inch
+        c.setFillColor(HexColor("#F1F0EC")); c.rect(x - 0.3 * inch, bot, 0.6 * inch, top - bot, stroke=0, fill=1)
+        c.setFillColor(DK); c.rect(x - w * inch / 2, bot, w * inch, top - bot, stroke=0, fill=1)
+        p = c.beginPath(); p.moveTo(x, top + 4); p.lineTo(x - 5, top + 13); p.lineTo(x + 5, top + 13); p.close()
+        c.setFillColor(OR); c.drawPath(p, stroke=0, fill=1)
+        label(c, x, top + 17, name, 8, True)
+        label(c, x, bot - 12, f"{pts} PT" + ("S" if pts > 1 else ""), 7, True, col=OR)
+    label(c, 2.64 * inch, bot - 26, "TRUE = real card thickness, about 0.012 in.", 6.5)
+
+    # real card station
+    sx = 5.3 * inch
+    label(c, 4.95 * inch, 5.82 * inch, "REAL CARD STATION", 11, True, center=False)
+    mid = (top + bot) / 2
+    s_top, s_bot = mid + 1.25 * inch, mid - 1.25 * inch
+    c.setStrokeColor(OR); c.setLineWidth(1.4)
+    for yy in (s_top + 0.05 * inch, s_bot - 0.05 * inch):
+        c.line(sx - 0.35 * inch, yy, sx + 0.35 * inch, yy)
+    c.line(sx, s_top + 0.05 * inch, sx, s_top + 0.25 * inch); c.line(sx, s_bot - 0.05 * inch, sx, s_bot - 0.25 * inch)
+    c.setStrokeColor(DK); c.setLineWidth(1); c.setDash(5, 3)
+    c.line(sx, s_top, sx, s_bot); c.setDash()
+    label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.2 * inch, "CUT", 7, True, center=False)
+    label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.05 * inch, "SLIT", 7, True, center=False)
+    # top-view diagram
+    dx, dy = 6.7 * inch, 3.25 * inch
+    c.setStrokeColor(DK); c.setLineWidth(2); c.line(dx - 0.25 * inch, dy, dx + 0.25 * inch, dy)
+    c.setStrokeColor(OR); c.setLineWidth(2); c.line(dx, dy, dx, dy - 0.45 * inch)
+    c.setFillColor(DK); p = c.beginPath(); p.moveTo(dx, dy - 0.62 * inch); p.lineTo(dx - 4, dy - 0.72 * inch); p.lineTo(dx + 4, dy - 0.72 * inch); p.close(); c.drawPath(p, stroke=0, fill=1)
+    label(c, dx, dy + 6, "TOP VIEW", 6, True)
+    label(c, dx, dy - 0.82 * inch, "YOU", 6, True)
+    steps = ["1. Tape this sheet to cardboard.", "2. Cut a 2.5 in. slit along the", "    dashed line.", "3. Push a real card in on its short", "    edge, about 1/2 in. deep.", "4. It should point straight at you.", "5. Hold on the line. Split it."]
+    for i, t in enumerate(steps):
+        label(c, 5.75 * inch, (5.0 - i * 0.2) * inch, t, 7.5, center=False)
+
+    # rules
+    c.setFillColor(DK); c.rect(0.75 * inch, 1.3 * inch, 7 * inch, 0.72 * inch, stroke=0, fill=1)
+    label(c, 0.9 * inch, 1.82 * inch, "SCORING", 8, True, col=OR, center=False)
+    label(c, 0.9 * inch, 1.64 * inch, "Split = card cut into two pieces, sign the Split Club.   Nick = edge clipped, card still whole.", 7.5, col=white, center=False)
+    label(c, 0.9 * inch, 1.46 * inch, "Ladder: 15 points max. Set the card in front of a solid backer and a safe backstop.", 7.5, col=white, center=False)
+
+
 # ---------------- drill book ----------------
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -1061,7 +1154,7 @@ for _n, _codes in enumerate(_chunks):
 
 
 # ---------------- build ----------------
-SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 29), ("AGENCY & MILITARY", 29, 37), ("DRILL BOOK", 37, 99)]
+SECTIONS = [("TARGETS", 0, 16), ("SHOOTER TOOLS", 16, 22), ("FIELD KIT", 22, 29), ("AGENCY & MILITARY", 29, 37), ("DECK", 37, 38), ("DRILL BOOK", 38, 99)]
 
 
 def cover(c):
@@ -1074,9 +1167,9 @@ def cover(c):
     c.setFont("Helvetica", 11)
     c.drawString(0.75 * inch, 9.12 * inch, f"{len(PAGES)} sheets  |  US Letter  |  true scale")
     colx = [0.75 * inch, 4.4 * inch]
-    layout = [(0, SECTIONS[0]), (0, SECTIONS[4]), (1, SECTIONS[1]), (1, SECTIONS[2]), (1, SECTIONS[3])]
-    ys = [8.3 * inch, 8.3 * inch]
-    rh = 0.29 * inch
+    layout = [(0, SECTIONS[0]), (0, SECTIONS[5]), (1, SECTIONS[1]), (1, SECTIONS[2]), (1, SECTIONS[3]), (1, SECTIONS[4])]
+    ys = [8.55 * inch, 8.55 * inch]
+    rh = 0.255 * inch
     for col, (name, a0, a1) in layout:
         x = colx[col]; y = ys[col]
         c.setFillColor(OR); c.setFont("Helvetica-Bold", 9)

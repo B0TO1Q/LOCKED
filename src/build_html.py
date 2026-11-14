@@ -174,6 +174,7 @@ const SECTIONS = {
   "Shooter Tools": "DOPE cards, angular reference, wind, round count and checklist.",
   "Field Kit": "Data book, range card, range estimation and fundamentals for rifle work.",
   "Agency & Military": "Q-style, police silhouette, E- and F-type, scaled-distance and practical competition replicas, plus the FBI pistol qualification card.",
+  "Deck": "Playing-card targets for a fun day at camp. Card Edge: split a real card on edge and sign the Split Club.",
   "Drill Book": "Three drills for every target, with distance, round count and par time. Print these and tick off each drill as you run it clean."
 };
 const order = Object.keys(SECTIONS);

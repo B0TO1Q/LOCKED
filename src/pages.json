@@ -22,7 +22,7 @@
     "Make your first shot of every session on bull 1 and write down where it lands versus your zero."
    ]
   ],
-  "drillPage": 39
+  "drillPage": 40
  },
  {
   "code": "T-02",
@@ -47,7 +47,7 @@
     "Shoot center, dial 4 MOA up and shoot, 4 right, 4 down, 4 left. Hits should form a square and end on the first hole. Tests turret tracking."
    ]
   ],
-  "drillPage": 39
+  "drillPage": 40
  },
  {
   "code": "T-03",
@@ -72,7 +72,7 @@
     "Five each prone, kneeling and standing. Measure each group in cm and log the spread."
    ]
   ],
-  "drillPage": 39
+  "drillPage": 40
  },
  {
   "code": "T-04",
@@ -97,7 +97,7 @@
     "On the beep, build position and fire one shot on a 1 MOA dot within 10 seconds. Repeat on each 1 MOA dot."
    ]
   ],
-  "drillPage": 39
+  "drillPage": 40
  },
  {
   "code": "T-05",
@@ -122,7 +122,7 @@
     "Two strings of 5 rounds in 10 seconds each. Compare with your slow-fire score."
    ]
   ],
-  "drillPage": 39
+  "drillPage": 40
  },
  {
   "code": "T-06",
@@ -147,7 +147,7 @@
     "Bulls 1-3 prone, 4-6 sitting, 7-8 kneeling, 9-10 standing."
    ]
   ],
-  "drillPage": 40
+  "drillPage": 41
  },
  {
   "code": "T-07",
@@ -172,7 +172,7 @@
     "Run strings 2 and 4 with a 2.0 s par per draw. Misses or over time count as a fail."
    ]
   ],
-  "drillPage": 40
+  "drillPage": 41
  },
  {
   "code": "T-08",
@@ -197,7 +197,7 @@
     "Two to the body, emergency reload, two more to the body."
    ]
   ],
-  "drillPage": 40
+  "drillPage": 41
  },
  {
   "code": "T-09",
@@ -222,7 +222,7 @@
     "A partner calls three numbers. Shoot them in that order."
    ]
   ],
-  "drillPage": 40
+  "drillPage": 41
  },
  {
   "code": "T-10",
@@ -247,7 +247,7 @@
     "Shoot any row, column or diagonal, one round per square. Then all three rows back to back."
    ]
   ],
-  "drillPage": 40
+  "drillPage": 41
  },
  {
   "code": "T-11",
@@ -272,7 +272,7 @@
     "Three plates, reload, three plates, stop plate."
    ]
   ],
-  "drillPage": 41
+  "drillPage": 42
  },
  {
   "code": "T-12",
@@ -297,7 +297,7 @@
     "Unloaded and verified. Press the trigger 20 times against a blank wall without the front sight moving."
    ]
   ],
-  "drillPage": 41
+  "drillPage": 42
  },
  {
   "code": "T-13",
@@ -322,7 +322,7 @@
     "Pick your best charge and vary only the seating depth across the diamonds."
    ]
   ],
-  "drillPage": 41
+  "drillPage": 42
  },
  {
   "code": "T-14",
@@ -347,7 +347,7 @@
     "Two rounds each on the bottom row, 4-5-6."
    ]
   ],
-  "drillPage": 41
+  "drillPage": 42
  },
  {
   "code": "T-15",
@@ -372,7 +372,7 @@
     "Shoot a group, then use the half-inch lines to measure it without a ruler."
    ]
   ],
-  "drillPage": 41
+  "drillPage": 42
  },
  {
   "code": "T-16",
@@ -460,7 +460,7 @@
     "Fire a 5-round group and count squares to read it in MOA directly."
    ]
   ],
-  "drillPage": 42
+  "drillPage": 43
  },
  {
   "code": "T-24",
@@ -485,7 +485,7 @@
     "Write one correction at the bottom, shoot the next string, and see if it closed the gap."
    ]
   ],
-  "drillPage": 42
+  "drillPage": 43
  },
  {
   "code": "T-25",
@@ -519,7 +519,7 @@
     "On the call, find it with the card and give your hold within 10 seconds."
    ]
   ],
-  "drillPage": 42
+  "drillPage": 43
  },
  {
   "code": "T-27",
@@ -544,7 +544,7 @@
     "Range each target with the table only, then engage it. Score first-round hits."
    ]
   ],
-  "drillPage": 42
+  "drillPage": 43
  },
  {
   "code": "T-28",
@@ -587,7 +587,7 @@
     "Three rounds at each distance, all inside the bottle, par 3.0 s each."
    ]
   ],
-  "drillPage": 43
+  "drillPage": 44
  },
  {
   "code": "T-31",
@@ -612,7 +612,7 @@
     "Any hit below the dashed line counts as a miss. Shoot 10 and keep all above it."
    ]
   ],
-  "drillPage": 43
+  "drillPage": 44
  },
  {
   "code": "T-32",
@@ -646,7 +646,7 @@
     "Four rounds at each distance from the holster, par 4 s each."
    ]
   ],
-  "drillPage": 43
+  "drillPage": 44
  },
  {
   "code": "T-34",
@@ -671,7 +671,7 @@
     "At 60 m this sheet looks like a full E-type at 300 m. Hold center and count hits."
    ]
   ],
-  "drillPage": 43
+  "drillPage": 44
  },
  {
   "code": "T-35",
@@ -696,7 +696,7 @@
     "From low ready, one round on the silhouette within 3 seconds, five times."
    ]
   ],
-  "drillPage": 44
+  "drillPage": 45
  },
  {
   "code": "T-36",
@@ -721,7 +721,7 @@
     "Two hits on every silhouette from prone."
    ]
   ],
-  "drillPage": 44
+  "drillPage": 45
  },
  {
   "code": "T-37",
@@ -746,14 +746,39 @@
     "One round in the head A zone from the holster, five repetitions."
    ]
   ],
-  "drillPage": 44
+  "drillPage": 45
+ },
+ {
+  "code": "T-38",
+  "title": "Card Edge",
+  "desc": "The classic trick shot: split a playing card on edge. Warm up on the pip, climb the paper edge ladder, then set a real card.",
+  "section": "Deck",
+  "page": 39,
+  "drills": [
+   [
+    "Camp Round",
+    "25 yd  \u00b7  1 rd each",
+    "Everyone gets one shot at a real card, then you all walk up together. Anyone who splits it signs the Split Club."
+   ],
+   [
+    "Ladder Climb",
+    "25 yd  \u00b7  5+ rds",
+    "Start on the 1/4 bar. Move to the next bar only after you touch the one you are on. Finish on the true edge."
+   ],
+   [
+    "Step Back",
+    "15 yd start  \u00b7  1 rd per card",
+    "After every split, step back 5 yd and set a fresh card. Longest split of the day wins."
+   ]
+  ],
+  "drillPage": 45
  },
  {
   "code": "D-01",
   "title": "Drill Book 1",
   "desc": "Three drills each for T-01 to T-05. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 39,
+  "page": 40,
   "drills": [],
   "drillPage": null
  },
@@ -762,7 +787,7 @@
   "title": "Drill Book 2",
   "desc": "Three drills each for T-06 to T-10. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 40,
+  "page": 41,
   "drills": [],
   "drillPage": null
  },
@@ -771,7 +796,7 @@
   "title": "Drill Book 3",
   "desc": "Three drills each for T-11 to T-15. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 41,
+  "page": 42,
   "drills": [],
   "drillPage": null
  },
@@ -780,7 +805,7 @@
   "title": "Drill Book 4",
   "desc": "Three drills each for T-23 to T-27. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 42,
+  "page": 43,
   "drills": [],
   "drillPage": null
  },
@@ -789,16 +814,16 @@
   "title": "Drill Book 5",
   "desc": "Three drills each for T-30 to T-34. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 43,
+  "page": 44,
   "drills": [],
   "drillPage": null
  },
  {
   "code": "D-06",
   "title": "Drill Book 6",
-  "desc": "Three drills each for T-35 to T-37. Tick the box once you run a drill clean.",
+  "desc": "Three drills each for T-35 to T-38. Tick the box once you run a drill clean.",
   "section": "Drill Book",
-  "page": 44,
+  "page": 45,
   "drills": [],
   "drillPage": null
  }
