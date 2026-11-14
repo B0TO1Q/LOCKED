@@ -1079,16 +1079,29 @@ def t38(c):
     c.line(sx, s_top, sx, s_bot); c.setDash()
     label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.2 * inch, "CUT", 7, True, center=False)
     label(c, sx + 0.12 * inch, (top + bot) / 2 + 0.05 * inch, "SLIT", 7, True, center=False)
-    # top-view diagram
-    dx, dy = 6.7 * inch, 3.25 * inch
-    c.setStrokeColor(DK); c.setLineWidth(2); c.line(dx - 0.25 * inch, dy, dx + 0.25 * inch, dy)
-    c.setStrokeColor(OR); c.setLineWidth(2); c.line(dx, dy, dx, dy - 0.45 * inch)
-    c.setFillColor(DK); p = c.beginPath(); p.moveTo(dx, dy - 0.62 * inch); p.lineTo(dx - 4, dy - 0.72 * inch); p.lineTo(dx + 4, dy - 0.72 * inch); p.close(); c.drawPath(p, stroke=0, fill=1)
-    label(c, dx, dy + 6, "TOP VIEW", 6, True)
-    label(c, dx, dy - 0.82 * inch, "YOU", 6, True)
+    # top-view diagram: looking down from above
+    dx = 6.55 * inch
+    by_ = 3.7 * inch                       # front face of the cardboard
+    label(c, 5.75 * inch, 3.93 * inch, "TOP VIEW  (looking down from above)", 6.5, True, center=False)
+    c.setFillColor(GR); c.rect(dx - 0.75 * inch, by_, 1.5 * inch, 0.09 * inch, stroke=0, fill=1)
+    c.setFillColor(DK); c.rect(dx - 0.75 * inch, by_ + 0.09 * inch, 1.5 * inch, 0.012 * inch * 4, stroke=0, fill=1)
+    label(c, dx + 0.8 * inch, by_ + 0.01 * inch, "CARDBOARD", 6, True, center=False)
+    label(c, dx + 0.8 * inch, by_ - 0.1 * inch, "+ this sheet", 6, center=False)
+    # card: pokes through the slit, sticks out toward the shooter
+    c.setStrokeColor(OR); c.setLineWidth(2.5)
+    c.line(dx, by_ + 0.16 * inch, dx, by_ - 0.55 * inch)
+    label(c, dx + 0.1 * inch, by_ - 0.3 * inch, "CARD", 6.5, True, col=OR, center=False)
+    label(c, dx + 0.1 * inch, by_ - 0.41 * inch, "edge faces you", 6, col=OR, center=False)
+    # line of fire
+    c.setStrokeColor(DK); c.setLineWidth(0.8); c.setDash(3, 2)
+    c.line(dx, by_ - 0.62 * inch, dx, 2.75 * inch); c.setDash()
+    c.setFillColor(DK); p = c.beginPath(); p.moveTo(dx, by_ - 0.58 * inch); p.lineTo(dx - 4, by_ - 0.68 * inch); p.lineTo(dx + 4, by_ - 0.68 * inch); p.close(); c.drawPath(p, stroke=0, fill=1)
+    label(c, dx - 0.45 * inch, 2.98 * inch, "LINE OF", 6)
+    label(c, dx - 0.45 * inch, 2.89 * inch, "FIRE", 6)
+    label(c, dx, 2.6 * inch, "YOU", 7, True)
     steps = ["1. Tape this sheet to cardboard.", "2. Cut a 2.5 in. slit along the", "    dashed line.", "3. Push a real card in on its short", "    edge, about 1/2 in. deep.", "4. It should point straight at you.", "5. Hold on the line. Split it."]
     for i, t in enumerate(steps):
-        label(c, 5.75 * inch, (5.0 - i * 0.2) * inch, t, 7.5, center=False)
+        label(c, 5.75 * inch, (5.35 - i * 0.2) * inch, t, 7.5, center=False)
 
     # rules
     c.setFillColor(DK); c.rect(0.75 * inch, 1.3 * inch, 7 * inch, 0.72 * inch, stroke=0, fill=1)
